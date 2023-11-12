@@ -5,6 +5,11 @@ public class City {
     private double latitude;
     private double longitude;
 
+    public City(String cityName, double latitude, double longitude) {
+        this.cityName = cityName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
     public String getCityName() {
         return cityName;
     }

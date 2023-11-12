@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -11,6 +12,9 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        UnitTests unitTests = new UnitTests();
+        if(!unitTests.runTests())
+            System.exit(1);
 
         while (true) {
             System.out.println("Choose an option:");
@@ -18,7 +22,8 @@ public class Main {
             System.out.println("Z - Exit");
 
             String userInput = scanner.nextLine();
-            if (userInput.equals("P") || userInput.equals("p")) {
+            if (userInput.equals("P") || userInput.equals("p"))
+            {
                 Gson citiesjson = new Gson();
                 try (FileReader reader = new FileReader("src/main/resources/cities.json"))
                 {
@@ -34,7 +39,7 @@ public class Main {
                     {
                         System.out.println("Enter the city name:");
                         String CityUserInput = scanner.nextLine();
-                       selectedCity = City.findCityByName(cities, CityUserInput);
+                        selectedCity = City.findCityByName(cities, CityUserInput);
                         if(selectedCity != null)
                             break;
                         else
@@ -44,17 +49,53 @@ public class Main {
                     System.out.println("City Name: " + selectedCity.getCityName());
                     System.out.println("Latitude: " + selectedCity.getLatitude());
                     System.out.println("Longitude: " + selectedCity.getLongitude());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                try (FileReader reader = new FileReader("src/main/resources/weather.json"))
+                {
+                    Gson gson = new Gson();
+                    WeatherData weatherData = gson.fromJson(reader, WeatherData.class);
 
+                    System.out.println("Weather:");
+                    System.out.println("temperature: " + weatherData.main.temp + "°C");
+                    System.out.println("pressure: " + weatherData.main.pressure + " hPa");
+                    System.out.println("humidity: " + weatherData.main.humidity + "%");
 
-
-
-                } catch (IOException e) {
+                    System.out.println("Enter the type of the file u want to save to P-PDF J-JSON X-XML");
+                    String ExportUserInput = scanner.nextLine();
+                    Exporter exporter = getExporter(ExportUserInput);
+                    if("J".equals(ExportUserInput))
+                    {
+                        exporter.export(weatherData, "src/main/answer.json");
+                    }
+                    else if ("X".equals(ExportUserInput))
+                    {
+                        exporter.export(weatherData, "src/main/answer.xml");
+                    }
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
 
-
             }
+            if(userInput.equals("Z") || userInput.equals("z"))
+                System.exit(1);
 
         }
     }
+    private static Exporter getExporter(String choice) {
+        switch (choice) {
+            case "J":
+                return new JsonSerialize();
+            case "X":
+                return new XMLSerialize();
+            default:
+                throw new IllegalArgumentException("U chose none");
+        }
+    }
+
 }
