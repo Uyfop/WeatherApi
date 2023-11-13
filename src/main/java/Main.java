@@ -68,13 +68,11 @@ public class Main {
                     String ExportUserInput = scanner.nextLine();
                     Exporter exporter = getExporter(ExportUserInput);
                     if("J".equals(ExportUserInput))
-                    {
-                        exporter.export(weatherData, "src/main/answer.json");
-                    }
-                    else if ("X".equals(ExportUserInput))
-                    {
-                        exporter.export(weatherData, "src/main/answer.xml");
-                    }
+                        exporter.export(weatherData, "src/main/answerJ.json");
+                    else if("X".equals(ExportUserInput))
+                        exporter.export(weatherData, "src/main/answerX.xml");
+                    else if("P".equals((ExportUserInput)))
+                        exporter.export(weatherData, "src/main/answerP.pdf");
                 }
                 catch (IOException e)
                 {
@@ -93,6 +91,8 @@ public class Main {
                 return new JsonSerialize();
             case "X":
                 return new XMLSerialize();
+            case "P":
+                return new PDFSerialize();
             default:
                 throw new IllegalArgumentException("U chose none");
         }
