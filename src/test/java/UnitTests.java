@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -66,37 +67,21 @@ class UnitTests {
                 .thenReturn(mockedWeatherData);
         WeatherData weatherData = jsonSerialize.DeserializeJson("src/main/resources/weatherMock.json");
         assertAll("weatherData",
-                () -> assertEquals(298.48, weatherData.main.temp),
-                () -> assertEquals(1015, weatherData.main.pressure),
-                () -> assertEquals(10000, weatherData.visibility));
+                () -> assertEquals(mockedWeatherData.main.temp, weatherData.main.temp),
+                () -> assertEquals(mockedWeatherData.main.pressure, weatherData.main.pressure),
+                () -> assertEquals(mockedWeatherData.visibility, weatherData.visibility));
     }
     @Test
     public void testExportAndDeserialize() throws IOException {
-        Writer writerMock = mock(Writer.class);
-        doNothing().when(writerMock).write(anyString());
-        Exporter exporter = Main.getExporter("J");
+        Exporter exporter = mock(Exporter.class);
+        when(Main.getExporter(Mockito.anyString())).thenReturn(new JsonSerialize());
         WeatherData mockedweatherData = JsonSerialize.DeserializeJson("src/main/resources/weatherMock.json");
         exporter.export(mockedweatherData, "src/test/mocked-answers/mockedAnswerJ.json");
-
-
-        // Verify that the export method was called with expected arguments
-        verify(writerMock).write(anyString(), eq(testFilePath));
-
-        // Read the content from the saved file
-        String savedJsonContent = new String(Files.readAllBytes(new File(testFilePath).toPath()));
-
-        // Implement your deserialization logic here
-        // For example, if using Gson:
-        Gson gson = new Gson();
-        YourDataObject deserializedData = gson.fromJson(savedJsonContent, YourDataObject.class);
-
-        // Perform assertions to verify the deserialization
-        // For example, check if deserializedData matches the original data
-        assertEquals(/* your expected data */, deserializedData);
-
-        // Optional: Clean up the test file after the test
-        Files.deleteIfExists(new File(testFilePath).toPath());
+        WeatherData weatherData = JsonSerialize.DeserializeJson("src/test/mocked-answers/mockedAnswerJ.json");
+        assertAll("weatherData",
+                () -> assertEquals(weatherData.main.temp,  mockedweatherData.main.temp),
+                () -> assertEquals(weatherData.main.temp,  mockedweatherData.main.pressure),
+                () -> assertEquals(weatherData.main.temp,  mockedweatherData.visibility));
     }
-
 
 }

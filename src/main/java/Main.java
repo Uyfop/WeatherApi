@@ -38,11 +38,11 @@ public class Main {
                 System.out.println("humidity: " + weatherData.main.humidity + "%");
                 System.out.println("Enter the type of the file u want to save to P-PDF J-JSON X-XML");
                 String ExportUserInput = scanner.nextLine();
-                //Exporter exporter = getExporter(ExportUserInput, weatherData);
+                Exporter exporter = getExporter(ExportUserInput);
                 switch (ExportUserInput) {
-                    case "J" -> JsonSerialize.SerializeJson(weatherData, "src/main/answerJ.json");
-                    //case "X" -> exporter.export(weatherData, "src/main/answerX.xml");
-                    //case "P" -> exporter.export(weatherData, "src/main/answerP.pdf");
+                    case "J" -> exporter.export(weatherData, "src/main/answerJ.json");
+                    case "X" -> exporter.export(weatherData, "src/main/answerX.xml");
+                    case "P" -> exporter.export(weatherData, "src/main/answerP.pdf");
                 }
             }
             if (userInput.equalsIgnoreCase("Z")){
@@ -51,9 +51,10 @@ public class Main {
         }
     }
 
-        static Exporter getExporter(String choice, WeatherData weatherData)
+        static Exporter getExporter(String choice)
         {
             return switch (choice) {
+                case "J" -> new JsonSerialize();
                 case "X" -> new XMLSerialize();
                 case "P" -> new PDFSerialize();
                 default -> throw new IllegalArgumentException("U chose none");
@@ -81,7 +82,8 @@ public class Main {
 
                 if (entity != null) {
                     JsonObject result = convertEntityToJsonObject(entity);
-                    JsonSerialize.SerializeJson(result, "src/main/resources/weather.json");
+                    Exporter exporter = getExporter("J");
+                    exporter.export(result, "src/main/resources/weather.json");
                 }
             } catch (ClientProtocolException e) {
                 throw new RuntimeException(e);

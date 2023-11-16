@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<weatherDataWrapper>
+    <weatherData>
+        <coord>
+            <lon>21.0122</lon>
+            <lat>52.2297</lat>
+        </coord>
+        <weather>
+            <id>804</id>
+            <main>Clouds</main>
+            <description>overcast clouds</description>
+            <icon>04n</icon>
+        </weather>
+        <base>stations</base>
+        <main>
+            <temp>276.81</temp>
+            <feelsLike>273.62</feelsLike>
+            <tempMin>275.03</tempMin>
+            <tempMax>278.03</tempMax>
+            <pressure>1012</pressure>
+            <humidity>80</humidity>
+            <seaLevel>0</seaLevel>
+            <groundLevel>0</groundLevel>
+        </main>
+        <visibility>10000</visibility>
+        <wind>
+            <speed>3.6</speed>
+            <deg>120</deg>
+            <gust>0.0</gust>
+        </wind>
+        <clouds>
+            <all>100</all>
+        </clouds>
+        <dt>1700149287</dt>
+        <sys>
+            <type>2</type>
+            <id>2032856</id>
+            <country>PL</country>
+            <sunrise>1700114260</sunrise>
+            <sunset>1700145831</sunset>
+        </sys>
+        <timezone>3600</timezone>
+        <id>756135</id>
+        <name>Warsaw</name>
+        <cod>200</cod>
+    </weatherData>
+</weatherDataWrapper>

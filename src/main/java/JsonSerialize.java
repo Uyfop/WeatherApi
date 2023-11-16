@@ -8,10 +8,10 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class JsonSerialize
+public class JsonSerialize implements Exporter
 {
 
-    public static void SerializeJson(Object data, String filePath) throws IOException
+    public void export(Object data, String filePath) throws IOException
     {
         try (Writer writer = new FileWriter(filePath))
         {
