@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnitTests {
+public class UnitTestsOLD {
 
     public boolean runTests()
     {
-        UnitTests unitTests = new UnitTests();
+        UnitTestsOLD unitTests = new UnitTestsOLD();
         if (!unitTests.testFindCityByName("Warszawa") || !unitTests.testFindCityByName("Krakow"))
         {
             System.out.println("FindCityByName Method not working");

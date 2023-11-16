@@ -8,10 +8,10 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class JsonSerialize implements Exporter
+public class JsonSerialize
 {
-    @Override
-    public void export(Object data, String filePath) throws IOException
+
+    public static void SerializeJson(Object data, String filePath) throws IOException
     {
         try (Writer writer = new FileWriter(filePath))
         {
@@ -19,11 +19,11 @@ public class JsonSerialize implements Exporter
             gson.toJson(data, writer);
         }
     }
-    public static List<City> DeserializeJsonToList()
+    public static List<City> DeserializeJsonToList(String filepath)
     {
         Gson citiesjson = new Gson();
         List<City> cities = null;
-        try (FileReader reader = new FileReader("src/main/resources/cities.json")) {
+        try (FileReader reader = new FileReader(filepath)) {
             Type cityListType = new TypeToken<List<City>>() {
             }.getType();
 
@@ -35,15 +35,16 @@ public class JsonSerialize implements Exporter
         return cities;
     }
 
-    public static WeatherData DeserializeJson() {
+    public static WeatherData DeserializeJson(String filepath) {
         Gson gson = new Gson();
         WeatherData weatherData = null;
 
-        try (FileReader reader = new FileReader("src/main/resources/weatherMock.json")) {
+        try (FileReader reader = new FileReader(filepath)) {
            weatherData = gson.fromJson(reader, WeatherData.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return weatherData;
     }
+
 }
