@@ -17,7 +17,6 @@ public class PDFSerialize implements Exporter {
              PdfDocument pdf = new PdfDocument(writer);
              Document document = new Document(pdf)) {
             document.add(new Paragraph(getWeatherDataAsString(weatherData)));
-
         } catch (FileNotFoundException e) {
             throw new IOException("Error creating PDF file.", e);
         }

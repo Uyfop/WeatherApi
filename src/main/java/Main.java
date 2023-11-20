@@ -10,13 +10,20 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+
 public class Main {
+    private static Map<String, String> exporterDest;
     public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
-
+        exporterDest = Map.of(
+                "J", "src/main/answerJ.json",
+                "X", "src/main/answerX.xml",
+                "P", "src/main/answerP.pdf"
+        );
         while (true) {
             System.out.println("Choose an option:");
             System.out.println("P - Enter a city name");
@@ -39,11 +46,7 @@ public class Main {
                 System.out.println("Enter the type of the file u want to save to P-PDF J-JSON X-XML");
                 String ExportUserInput = scanner.nextLine();
                 Exporter exporter = getExporter(ExportUserInput);
-                switch (ExportUserInput) {
-                    case "J" -> exporter.export(weatherData, "src/main/answerJ.json");
-                    case "X" -> exporter.export(weatherData, "src/main/answerX.xml");
-                    case "P" -> exporter.export(weatherData, "src/main/answerP.pdf");
-                }
+                exporter.export(weatherData, exporterDest.get(ExportUserInput));
             }
             if (userInput.equalsIgnoreCase("Z")){
                 System.exit(1);
@@ -60,6 +63,7 @@ public class Main {
                 default -> throw new IllegalArgumentException("U chose none");
             };
         }
+
     public static JsonObject convertEntityToJsonObject(HttpEntity entity) {
         try {
             String jsonString = EntityUtils.toString(entity);
@@ -79,7 +83,6 @@ public class Main {
             try (CloseableHttpResponse response = httpclient.execute(request)) {
                 System.out.println(response.getStatusLine().toString());
                 HttpEntity entity = response.getEntity();
-
                 if (entity != null) {
                     JsonObject result = convertEntityToJsonObject(entity);
                     Exporter exporter = getExporter("J");

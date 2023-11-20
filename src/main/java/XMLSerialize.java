@@ -18,7 +18,6 @@ public class XMLSerialize implements Exporter {
             try (FileWriter writer = new FileWriter(filePath)) {
                 marshaller.marshal(wrapper, writer);
             }
-
             System.out.println("Data exported to XML successfully.");
         } catch (JAXBException e) {
             throw new IOException("Error exporting data to XML.", e);

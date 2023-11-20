@@ -1,27 +1,27 @@
 [
   {
-    "cityName": "Warszawa",
+    "cityName": "Warsaw",
     "latitude": 52.2297,
     "longitude": 21.0122
   },
   {
-    "cityName": "Krakow",
-    "latitude": 50.0647,
-    "longitude": 19.9450
+    "cityName": "Chicago",
+    "latitude": 41.8781,
+    "longitude": -87.6298
   },
   {
-    "cityName": "Lodz",
-    "latitude": 51.7592,
-    "longitude": 19.4558
+    "cityName": "Houston",
+    "latitude": 29.7604,
+    "longitude": -95.3698
   },
   {
-    "cityName": "Wroclaw",
-    "latitude": 51.1079,
-    "longitude": 17.0385
+    "cityName": "Madrid",
+    "latitude": 40.4168,
+    "longitude": -3.7038
   },
   {
-    "cityName": "Poznan",
-    "latitude": 52.4080,
-    "longitude": 16.9336
+    "cityName": "Paris",
+    "latitude": 48.8566,
+    "longitude": 2.3522
   }
 ]

@@ -18,6 +18,7 @@ public class JsonSerialize implements Exporter
             Gson gson = new Gson();
             gson.toJson(data, writer);
         }
+
     }
     public static List<City> DeserializeJsonToList(String filepath)
     {

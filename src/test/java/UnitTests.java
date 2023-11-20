@@ -56,7 +56,7 @@ class UnitTests {
     }
 
     @Test
-    public void testDeserializeJson()
+    public void testDeserialize()
     {
         JsonSerialize jsonSerialize = mock(JsonSerialize.class);
         WeatherData mockedWeatherData = new WeatherData();
@@ -71,8 +71,10 @@ class UnitTests {
                 () -> assertEquals(mockedWeatherData.main.pressure, weatherData.main.pressure),
                 () -> assertEquals(mockedWeatherData.visibility, weatherData.visibility));
     }
+
+
     @Test
-    public void testExportAndDeserialize() throws IOException {
+    public void testExport() throws IOException {
         Exporter exporter = mock(Exporter.class);
         when(Main.getExporter(Mockito.anyString())).thenReturn(new JsonSerialize());
         WeatherData mockedweatherData = JsonSerialize.DeserializeJson("src/main/resources/weatherMock.json");
